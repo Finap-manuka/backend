@@ -2,7 +2,8 @@
 using finap.Models;
 using finap.DTOs;
 using finap.Data;
-
+using System.Text;
+using System.Security.Cryptography;
 
 namespace EmployeePortal.Controllers
 {
@@ -17,14 +18,14 @@ namespace EmployeePortal.Controllers
             _context = context;
         }
 
-        [HttpPost]
+        [HttpPost("/new-user")]
         public IActionResult CreateUser(CreateUserDto dto)
         {
             var user = new User
             {
                 Name = dto.Name,
                 Email = dto.Email,
-                PasswordHash = dto.Password, // ⚠️ hash later
+                PasswordHash = HashPassword(dto.Password), // ⚠️ hash later
                 Role = dto.Role,
                 StartDate = dto.StartDate
             };
@@ -55,6 +56,13 @@ namespace EmployeePortal.Controllers
             }).ToList();
 
             return Ok(users);
+        }
+
+        private string HashPassword(string password)
+        {
+            using var sha256 = SHA256.Create();
+            var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(bytes);
         }
     }
 }

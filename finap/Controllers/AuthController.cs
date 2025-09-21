@@ -50,7 +50,14 @@ namespace finap.Controllers
             if (!VerifyPassword(dto.Password, user.PasswordHash))
                 return Unauthorized("Invalid email or password.");
 
-            return Ok(new { message = "Login successful!" });
+            // Return success response with user data
+            return Ok(new
+            {
+                message = "Login successful!",
+                userId = user.UserId,
+                name = user.Name,
+                role = user.Role
+            });
         }
 
         // 🔹 Helper Methods
