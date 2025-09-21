@@ -28,11 +28,16 @@ Update `appsettings.json`:
 }
 ```
 
+
+
 ### 4. Database Migration
 ```bash
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
+
+#### Database Script
+You can find the database script file inside the finap/SQL Script folder.
 
 ### 5. Build and Run
 ```bash
@@ -44,3 +49,5 @@ dotnet run
 ## Verification
 - API: `https://localhost:5001`
 - Swagger: `https://localhost:5001/swagger`
+
+
